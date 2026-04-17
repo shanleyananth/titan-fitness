@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <title>Titan Fitness — Transform Your Body, Build Your Strength</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#home">Skip to content</a>
+
+    <header class="header" id="top">
+      <nav class="nav container" aria-label="Primary">
+        <a class="brand" href="#home" aria-label="Titan Fitness home">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__text">Titan Fitness</span>
+        </a>
+
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navLinks">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="nav__toggleLines" aria-hidden="true"></span>
+        </button>
+
+        <div class="nav__links" id="navLinks">
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#timings">Timings</a>
+          <a href="#join" class="nav__cta" data-join data-plan="1 Month Pass">Join Now</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero__bg" role="img" aria-label="Fitness training background"></div>
+        <div class="container hero__content reveal">
+          <p class="hero__eyebrow">Strength • Discipline • Results</p>
+          <h1 class="hero__title">Titan Fitness</h1>
+          <p class="hero__tagline">Transform Your Body, Build Your Strength</p>
+
+          <div class="hero__actions">
+            <button class="btn btn--primary" type="button" data-join data-plan="1 Month Pass">
+              Join Now
+            </button>
+            <a class="btn btn--ghost" href="#pricing">View Pricing</a>
+          </div>
+
+          <div class="hero__note">
+            <span class="pill pill--warn">Offline payment only</span>
+            <span class="hero__noteText">Pay at the gym</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="container">
+          <header class="section__header reveal">
+            <h2 class="section__title">Built for serious training</h2>
+            <p class="section__subtitle">Everything you need to train hard and recover smart.</p>
+          </header>
+
+          <div class="grid grid--3">
+            <article class="card feature reveal">
+              <div class="feature__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M7 7h10M7 12h10M7 17h10"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                </svg>
+              </div>
+              <h3 class="card__title">AC Facility</h3>
+              <p class="card__text">Train comfortably with airflow designed for performance.</p>
+            </article>
+
+            <article class="card feature reveal">
+              <div class="feature__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M7 10h10M7 14h10"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M4 9v6M20 9v6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M6 7h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                </svg>
+              </div>
+              <h3 class="card__title">Modern Equipment</h3>
+              <p class="card__text">Quality machines and free weights for every goal.</p>
+            </article>
+
+            <article class="card feature reveal">
+              <div class="feature__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 7v5l3 2"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                </svg>
+              </div>
+              <h3 class="card__title">Open Daily</h3>
+              <p class="card__text">Consistency wins. We’re open all 7 days a week.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--muted" id="pricing">
+        <div class="container">
+          <header class="section__header reveal">
+            <h2 class="section__title">Simple pricing. Strong results.</h2>
+            <p class="section__subtitle">Choose a plan and pay offline at the gym to activate.</p>
+          </header>
+
+          <div class="note-banner reveal" role="note">
+            <strong>Offline payment only – Pay at the gym</strong>
+          </div>
+
+          <div class="grid grid--3 pricing">
+            <article class="card price reveal">
+              <header class="price__header">
+                <h3 class="card__title">1 Day Pass</h3>
+                <p class="price__amount"><span class="price__currency">₹</span>199</p>
+              </header>
+              <ul class="list">
+                <li>Full gym access</li>
+                <li>All equipment</li>
+                <li>Any training time</li>
+              </ul>
+              <button class="btn btn--primary btn--full" type="button" data-join data-plan="1 Day Pass">
+                Join Now
+              </button>
+            </article>
+
+            <article class="card price reveal">
+              <header class="price__header">
+                <h3 class="card__title">1 Week Pass</h3>
+                <p class="price__amount"><span class="price__currency">₹</span>699</p>
+              </header>
+              <ul class="list">
+                <li>Full gym access</li>
+                <li>Beginner-friendly</li>
+                <li>7 days training</li>
+              </ul>
+              <button class="btn btn--primary btn--full" type="button" data-join data-plan="1 Week Pass">
+                Join Now
+              </button>
+            </article>
+
+            <article class="card price price--popular reveal">
+              <div class="badge" aria-label="Most popular plan">Popular</div>
+              <header class="price__header">
+                <h3 class="card__title">1 Month Pass</h3>
+                <p class="price__amount"><span class="price__currency">₹</span>2499</p>
+              </header>
+              <ul class="list">
+                <li>Full gym access</li>
+                <li>Best value</li>
+                <li>Build a routine</li>
+              </ul>
+              <button
+                class="btn btn--primary btn--full"
+                type="button"
+                data-join
+                data-plan="1 Month Pass"
+              >
+                Join Now
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="timings">
+        <div class="container">
+          <header class="section__header reveal">
+            <h2 class="section__title">Timings</h2>
+            <p class="section__subtitle">Train when it fits your schedule.</p>
+          </header>
+
+          <div class="timings reveal">
+            <div class="timings__card">
+              <div class="timings__row">
+                <span class="timings__label">Opening time</span>
+                <span class="timings__value">6:00 AM – 9:00 PM</span>
+              </div>
+              <div class="timings__row">
+                <span class="timings__label">Days</span>
+                <span class="timings__value">Open all 7 days</span>
+              </div>
+            </div>
+            <div class="timings__cta">
+              <p class="timings__ctaText">Ready to start? Pick a plan and reserve your spot.</p>
+              <button class="btn btn--primary" type="button" data-join data-plan="1 Month Pass">Join Now</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--muted" id="join">
+        <div class="container">
+          <header class="section__header reveal">
+            <h2 class="section__title">Join Titan Fitness</h2>
+            <p class="section__subtitle">Tap “Join Now” to open the booking form.</p>
+          </header>
+
+          <div class="join__grid">
+            <div class="card join__card reveal">
+              <h3 class="card__title">Fast registration</h3>
+              <p class="card__text">
+                Fill your details, select a plan, and we’ll send your registration to our team.
+              </p>
+              <div class="note-banner note-banner--subtle" role="note">
+                <strong>Offline payment only – Pay at the gym</strong>
+              </div>
+              <button class="btn btn--primary" type="button" data-join data-plan="1 Month Pass">Join Now</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__content">
+        <div>
+          <div class="footer__brand">Titan Fitness</div>
+          <div class="footer__muted">Transform Your Body, Build Your Strength</div>
+        </div>
+        <div class="footer__muted">© <span id="year"></span> Titan Fitness. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <div class="modal" id="bookingModal" aria-hidden="true">
+      <div class="modal__overlay" data-modal-close tabindex="-1"></div>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+        <button class="modal__close" type="button" aria-label="Close booking form" data-modal-close>
+          <span aria-hidden="true">×</span>
+        </button>
+
+        <div class="modal__body" id="modalBody">
+          <h2 class="modal__title" id="bookingTitle">Booking Form</h2>
+          <p class="modal__subtitle">Complete registration. Payment is offline at the gym.</p>
+
+          <div class="note-banner note-banner--subtle" role="note">
+            <strong>Offline payment only – Pay at the gym</strong>
+          </div>
+
+          <form class="form" id="bookingForm" novalidate>
+            <div class="form__row">
+              <label class="form__label" for="name">Name</label>
+              <input class="form__input" id="name" name="from_name" type="text" autocomplete="name" required />
+              <div class="form__error" data-error-for="name"></div>
+            </div>
+
+            <div class="form__row">
+              <label class="form__label" for="email">Email</label>
+              <input class="form__input" id="email" name="reply_to" type="email" autocomplete="email" required />
+              <div class="form__error" data-error-for="email"></div>
+            </div>
+
+            <div class="form__row">
+              <label class="form__label" for="phone">Phone Number</label>
+              <input
+                class="form__input"
+                id="phone"
+                name="phone"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                placeholder="e.g. 9876543210"
+                required
+              />
+              <div class="form__error" data-error-for="phone"></div>
+            </div>
+
+            <div class="form__row">
+              <label class="form__label" for="plan">Select Plan</label>
+              <select class="form__input" id="plan" name="plan" required>
+                <option value="1 Day Pass">1 Day Pass – ₹199</option>
+                <option value="1 Week Pass">1 Week Pass – ₹699</option>
+                <option value="1 Month Pass">1 Month Pass – ₹2499</option>
+              </select>
+              <div class="form__error" data-error-for="plan"></div>
+            </div>
+
+            <button class="btn btn--primary btn--full" type="submit" id="submitBtn">Submit Registration</button>
+
+            <div class="form__status" id="formStatus" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
