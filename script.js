@@ -1,41 +1,61 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from "./supabase-config.js";
 
-const navToggle = document.querySelector(".nav__toggle");
-const navLinks = document.getElementById("navLinks");
-const toTop = document.getElementById("toTop");
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+const EMAILJS_PUBLIC_KEY = "YOUR_EMAILJS_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID = "YOUR_EMAILJS_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "YOUR_EMAILJS_TEMPLATE_ID";
+
+const PRODUCT = {
+  name: "SupernovaX Smart Bottle",
+  amount: 499,
+  upiId: "supernovax@upi",
+  payeeName: "SupernovaX",
+};
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+function $(id) {
+  return document.getElementById(id);
+}
+
 function setYear() {
-  const year = document.getElementById("year");
+  const year = $("year");
   if (year) year.textContent = String(new Date().getFullYear());
 }
 
-function bindNavToggle() {
-  if (!navToggle || !navLinks) return;
-  navToggle.addEventListener("click", () => {
-    const isOpen = navLinks.classList.toggle("is-open");
-    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  });
-  navLinks.querySelectorAll("a").forEach((a) => {
-    a.addEventListener("click", () => {
-      navLinks.classList.remove("is-open");
-      navToggle.setAttribute("aria-expanded", "false");
-    });
-  });
+function initEmailJs() {
+  const lib = window.emailjs;
+  if (!lib) return false;
+  try {
+    lib.init(EMAILJS_PUBLIC_KEY);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
-function initRevealAnimations() {
+function setStatus(id, message, type = "info") {
+  const el = $(id);
+  if (!el) return;
+  el.textContent = message;
+  el.dataset.type = type;
+}
+
+function setError(id, message) {
+  const el = $(id);
+  if (el) el.textContent = message;
+}
+
+function reveal() {
   const items = document.querySelectorAll(".reveal");
   if (!items.length) return;
-
   const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
   if (reducedMotion) {
     items.forEach((el) => el.classList.add("is-visible"));
     return;
   }
-
   const observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
@@ -45,146 +65,299 @@ function initRevealAnimations() {
         }
       }
     },
-    { threshold: 0.14 },
+    { threshold: 0.12 },
   );
-
   items.forEach((el) => observer.observe(el));
 }
 
-function bindBackToTop() {
-  if (!toTop) return;
-  const onScroll = () => {
-    const show = window.scrollY > 650;
-    toTop.classList.toggle("is-visible", show);
-  };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+function upiUri({ upiId, payeeName, amount, note }) {
+  const params = new URLSearchParams();
+  params.set("pa", upiId);
+  params.set("pn", payeeName);
+  params.set("am", String(amount));
+  params.set("cu", "INR");
+  if (note) params.set("tn", note);
+  return `upi://pay?${params.toString()}`;
+}
 
-  toTop.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+function renderQr(text) {
+  const qrBox = $("qrBox");
+  if (!qrBox) return;
+  qrBox.innerHTML = "";
+  if (!window.QRCode) return;
+  // eslint-disable-next-line no-undef
+  new QRCode(qrBox, { text, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+}
+
+async function getSession() {
+  const { data } = await supabase.auth.getSession();
+  return data?.session ?? null;
+}
+
+function getNextUrl() {
+  const next = new URLSearchParams(window.location.search).get("next");
+  if (!next) return null;
+  return next;
+}
+
+function toggleAuthUi(session) {
+  const pill = $("userPill");
+  const email = $("userEmail");
+  const loginLink = $("loginLink");
+  const logoutBtn = $("logoutBtn");
+
+  if (session?.user?.email) {
+    if (pill) pill.hidden = false;
+    if (email) email.textContent = session.user.email;
+    if (loginLink) loginLink.hidden = true;
+    if (logoutBtn) logoutBtn.hidden = false;
+  } else {
+    if (pill) pill.hidden = true;
+    if (email) email.textContent = "";
+    if (loginLink) loginLink.hidden = false;
+    if (logoutBtn) logoutBtn.hidden = true;
+  }
+}
+
+function showCheckoutAuthed(session) {
+  const loginRequiredCard = $("loginRequiredCard");
+  const paymentCard = $("paymentCard");
+  const orderCard = $("orderCard");
+  const emailInput = $("oEmail");
+
+  const authed = Boolean(session?.user?.email);
+  if (loginRequiredCard) loginRequiredCard.hidden = authed;
+  if (paymentCard) paymentCard.hidden = !authed;
+  if (orderCard) orderCard.hidden = !authed;
+  if (emailInput && authed) emailInput.value = session.user.email;
+
+  if (authed) {
+    $("amountText") && ($("amountText").textContent = String(PRODUCT.amount));
+    $("priceText") && ($("priceText").textContent = String(PRODUCT.amount));
+    $("upiIdText") && ($("upiIdText").textContent = PRODUCT.upiId);
+    renderQr(
+      upiUri({
+        upiId: PRODUCT.upiId,
+        payeeName: PRODUCT.payeeName,
+        amount: PRODUCT.amount,
+        note: `Order: ${PRODUCT.name}`,
+      }),
+    );
+  }
+}
+
+async function copyUpiLink() {
+  const link = upiUri({
+    upiId: PRODUCT.upiId,
+    payeeName: PRODUCT.payeeName,
+    amount: PRODUCT.amount,
+    note: `Order: ${PRODUCT.name}`,
   });
+  try {
+    await navigator.clipboard.writeText(link);
+    setStatus("orderStatus", "Copied UPI link.", "success");
+  } catch {
+    setStatus("orderStatus", "Could not copy UPI link.", "error");
+  }
 }
 
-function setActiveNavLink() {
-  const links = Array.from(document.querySelectorAll('.nav__links a[href^="#"]'));
-  if (!links.length) return;
-
-  const sections = links
-    .map((a) => {
-      const id = a.getAttribute("href")?.slice(1);
-      const el = id ? document.getElementById(id) : null;
-      return { a, el };
-    })
-    .filter((x) => x.el);
-
-  if (!sections.length) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-      if (!visible.length) return;
-      const activeEl = visible[0].target;
-      for (const { a, el } of sections) {
-        a.classList.toggle("is-active", el === activeEl);
-      }
-    },
-    { rootMargin: "-30% 0px -55% 0px", threshold: [0.05, 0.12, 0.2] },
-  );
-
-  sections.forEach(({ el }) => observer.observe(el));
-}
-
-function clearErrors() {
-  document.querySelectorAll("[data-error-for]").forEach((el) => {
-    el.textContent = "";
-  });
-}
-
-function setError(inputId, message) {
-  const el = document.querySelector(`[data-error-for="${inputId}"]`);
-  if (el) el.textContent = message;
-}
-
-function setStatus(message, type = "info") {
-  const statusEl = document.getElementById("contactStatus");
-  if (!statusEl) return;
-  statusEl.textContent = message;
-  statusEl.dataset.type = type;
-}
-
-function validateContactForm() {
-  clearErrors();
+function validateOrder({ name, utr }) {
+  setError("oNameErr", "");
+  setError("oUtrErr", "");
   let ok = true;
-
-  const name = document.getElementById("cName");
-  const email = document.getElementById("cEmail");
-  const message = document.getElementById("cMessage");
-
-  if (!name?.value?.trim()) {
-    setError("cName", "Please enter your name.");
+  if (!name || name.trim().length < 2) {
+    setError("oNameErr", "Enter your name.");
     ok = false;
   }
-  if (!email?.value?.trim() || !email.checkValidity()) {
-    setError("cEmail", "Please enter a valid email.");
+  if (!utr || String(utr).trim().length < 8) {
+    setError("oUtrErr", "Enter a valid UTR number.");
     ok = false;
   }
-  if (!message?.value?.trim() || message.value.trim().length < 10) {
-    setError("cMessage", "Please enter a message (at least 10 characters).");
-    ok = false;
-  }
-
   return ok;
 }
 
-function bindContactForm() {
-  const form = document.getElementById("contactForm");
-  const submitBtn = document.getElementById("contactSubmit");
-  if (!form || !submitBtn) return;
+async function placeOrder({ name, email, utr }) {
+  const payload = {
+    name: name.trim(),
+    email,
+    product_name: PRODUCT.name,
+    amount: PRODUCT.amount,
+    utr_number: String(utr).trim(),
+    status: "pending",
+  };
 
-  form.addEventListener("submit", async (e) => {
+  const { error } = await supabase.from("orders").insert(payload);
+  if (error) throw error;
+
+  if (window.emailjs) {
+    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      customer_name: payload.name,
+      customer_email: payload.email,
+      product: payload.product_name,
+      amount: String(payload.amount),
+      utr_number: payload.utr_number,
+      status: payload.status,
+    });
+  }
+}
+
+async function bindHome() {
+  const logoutBtn = $("logoutBtn");
+  const buyNowBtn = $("buyNowBtn");
+  const copyBtn = $("copyUpiBtn");
+  const orderForm = $("orderForm");
+  const orderSubmitBtn = $("orderSubmitBtn");
+
+  initEmailJs();
+
+  let session = await getSession();
+  toggleAuthUi(session);
+  showCheckoutAuthed(session);
+
+  supabase.auth.onAuthStateChange((_event, nextSession) => {
+    session = nextSession;
+    toggleAuthUi(session);
+    showCheckoutAuthed(session);
+  });
+
+  logoutBtn?.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+  });
+
+  buyNowBtn?.addEventListener("click", async () => {
+    const s = await getSession();
+    if (!s) {
+      window.location.href = "./login.html?next=index.html%23checkout";
+      return;
+    }
+    document.getElementById("checkout")?.scrollIntoView({ behavior: "smooth" });
+  });
+
+  copyBtn?.addEventListener("click", copyUpiLink);
+
+  orderForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    setStatus("");
+    setStatus("orderStatus", "");
 
-    if (!validateContactForm()) {
-      setStatus("Please fix the highlighted fields.", "error");
+    const s = await getSession();
+    const email = s?.user?.email ?? "";
+    if (!email) {
+      window.location.href = "./login.html?next=index.html%23checkout";
       return;
     }
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Sending...";
-    setStatus("Sending your message…", "info");
+    const name = $("oName")?.value ?? "";
+    const utr = $("oUtr")?.value ?? "";
+    if (!validateOrder({ name, utr })) {
+      setStatus("orderStatus", "Please fix the highlighted fields.", "error");
+      return;
+    }
 
-    const name = document.getElementById("cName")?.value?.trim() ?? "";
-    const email = document.getElementById("cEmail")?.value?.trim() ?? "";
-    const message = document.getElementById("cMessage")?.value?.trim() ?? "";
+    if (orderSubmitBtn) {
+      orderSubmitBtn.disabled = true;
+      orderSubmitBtn.textContent = "Submitting…";
+    }
 
     try {
-      const { error } = await supabase.from("contact_messages").insert({
-        name,
-        email,
-        message,
-        page_url: window.location.href,
-        user_agent: navigator.userAgent,
-      });
-
-      if (error) throw error;
-
-      setStatus("Thanks! Your message was sent successfully.", "success");
-      form.reset();
+      setStatus("orderStatus", "Saving order and notifying admin…", "info");
+      await placeOrder({ name, email, utr });
+      setStatus("orderStatus", "Order placed. Waiting for verification.", "success");
+      orderForm.reset();
+      const emailInput = $("oEmail");
+      if (emailInput) emailInput.value = email;
     } catch (err) {
-      const msg = err?.message ? String(err.message) : "Failed to send message. Please try again.";
-      setStatus(msg, "error");
+      const msg = err?.message ? String(err.message) : "Failed to place order.";
+      setStatus("orderStatus", msg, "error");
     } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Send Message";
+      if (orderSubmitBtn) {
+        orderSubmitBtn.disabled = false;
+        orderSubmitBtn.textContent = "Submit Order";
+      }
     }
   });
 }
 
+async function bindLogin() {
+  initEmailJs();
+
+  const signInBtn = $("signInBtn");
+  const signUpBtn = $("signUpBtn");
+
+  const setBusy = (busy) => {
+    if (signInBtn) signInBtn.disabled = busy;
+    if (signUpBtn) signUpBtn.disabled = busy;
+  };
+
+  const read = () => ({
+    email: $("aEmail")?.value?.trim() ?? "",
+    password: $("aPassword")?.value ?? "",
+  });
+
+  const validate = ({ email, password }) => {
+    setError("aEmailError", "");
+    setError("aPasswordError", "");
+    let ok = true;
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      setError("aEmailError", "Enter a valid email.");
+      ok = false;
+    }
+    if (!password || password.length < 6) {
+      setError("aPasswordError", "Password must be at least 6 characters.");
+      ok = false;
+    }
+    return ok;
+  };
+
+  const goNext = () => {
+    const next = getNextUrl();
+    window.location.href = next || "./index.html#checkout";
+  };
+
+  const run = async (mode) => {
+    setStatus("authStatus", "");
+    setBusy(true);
+    try {
+      const v = read();
+      if (!validate(v)) {
+        setStatus("authStatus", "Please fix the highlighted fields.", "error");
+        return;
+      }
+      if (mode === "signin") {
+        const { error } = await supabase.auth.signInWithPassword(v);
+        if (error) throw error;
+        setStatus("authStatus", "Signed in. Redirecting…", "success");
+        window.setTimeout(goNext, 350);
+        return;
+      }
+      if (mode === "signup") {
+        const { error } = await supabase.auth.signUp(v);
+        if (error) throw error;
+        setStatus("authStatus", "Account created. Redirecting…", "success");
+        window.setTimeout(goNext, 350);
+        return;
+      }
+    } catch (err) {
+      const msg = err?.message ? String(err.message) : "Login failed.";
+      setStatus("authStatus", msg, "error");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  signInBtn?.addEventListener("click", () => run("signin"));
+  signUpBtn?.addEventListener("click", () => run("signup"));
+
+  const session = await getSession();
+  if (session) {
+    setStatus("authStatus", "You are already signed in. Redirecting…", "success");
+    window.setTimeout(goNext, 350);
+  }
+}
+
 setYear();
-bindNavToggle();
-initRevealAnimations();
-bindBackToTop();
-setActiveNavLink();
-bindContactForm();
+reveal();
+
+const page = document.body?.dataset?.page;
+if (page === "home") bindHome();
+if (page === "login") bindLogin();
 

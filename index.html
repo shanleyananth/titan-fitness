@@ -4,11 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#070b18" />
-    <title>Supernova Web Agency — Developer Portfolio</title>
-    <meta
-      name="description"
-      content="Developer portfolio of Supernova Web Agency. Projects, skills, and contact information."
-    />
+    <title>SupernovaX — Single Product Store</title>
+    <meta name="description" content="SupernovaX single-product ecommerce demo with Supabase login + UPI manual payment." />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,320 +13,186 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
-  <body>
+
+  <body data-page="home">
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="header" id="top">
-      <nav class="nav container" aria-label="Primary">
-        <a class="brand" href="#home" aria-label="Home">
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <a class="brand" href="./index.html" aria-label="SupernovaX home">
           <span class="brand__mark" aria-hidden="true"></span>
-          <span class="brand__text">Supernova Web Agency</span>
+          <span class="brand__text">SupernovaX</span>
         </a>
 
-        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navLinks">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="nav__toggleLines" aria-hidden="true"></span>
-        </button>
-
-        <div class="nav__links" id="navLinks">
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#skills">Skills</a>
-          <a href="#contact" class="nav__cta">Contact</a>
+        <div class="topbar__right">
+          <div class="userPill" id="userPill" hidden>
+            <span class="userPill__dot" aria-hidden="true"></span>
+            <span class="userPill__text" id="userEmail"></span>
+          </div>
+          <a class="btn btn--ghost btn--sm" href="./login.html" id="loginLink">Login</a>
+          <button class="btn btn--ghost btn--sm" type="button" id="logoutBtn" hidden>Logout</button>
         </div>
-      </nav>
+      </div>
     </header>
 
     <main id="main">
-      <section class="hero" id="home" aria-label="Hero">
-        <div class="hero__bg" aria-hidden="true"></div>
-        <div class="container hero__content reveal">
-          <div class="hero__chip">
-            <span class="dot" aria-hidden="true"></span>
-            Available for opportunities
+      <section class="hero">
+        <div class="container hero__grid">
+          <div class="hero__copy reveal">
+            <div class="badge">Single‑product ecommerce demo</div>
+            <h1 class="title">
+              SupernovaX <span class="grad">Smart Bottle</span>
+            </h1>
+            <p class="subtitle">
+              Hydration meets design. A clean checkout flow with <strong>Supabase Auth</strong>, <strong>manual UPI</strong>,
+              order storage, and <strong>EmailJS</strong> notifications.
+            </p>
+
+            <div class="priceRow">
+              <div class="priceRow__price">₹<span id="priceText">499</span></div>
+              <div class="priceRow__hint">Free shipping • 7‑day returns</div>
+            </div>
+
+            <div class="ctaRow">
+              <button class="btn btn--primary" type="button" id="buyNowBtn">Buy Now</button>
+              <a class="btn btn--ghost" href="#checkout">Go to checkout</a>
+            </div>
+
+            <div class="trustRow">
+              <div class="trust">
+                <div class="trust__k">UPI only</div>
+                <div class="trust__v">No gateways</div>
+              </div>
+              <div class="trust">
+                <div class="trust__k">Secure login</div>
+                <div class="trust__v">Supabase Auth</div>
+              </div>
+              <div class="trust">
+                <div class="trust__k">Order tracking</div>
+                <div class="trust__v">Pending verification</div>
+              </div>
+            </div>
           </div>
 
-          <h1 class="hero__title">
-            Hi, we’re <span class="grad">Supernova Web Agency</span>
-          </h1>
-          <p class="hero__tagline">
-            Web Developer • Building modern, responsive websites with clean UI and smooth interactions.
-          </p>
-
-          <div class="hero__actions">
-            <a class="btn btn--primary" href="#projects">View Projects</a>
-            <a class="btn btn--ghost" href="#contact">Contact Me</a>
-          </div>
-
-          <div class="hero__stats">
-            <div class="stat">
-              <div class="stat__num">3+</div>
-              <div class="stat__label">Projects</div>
-            </div>
-            <div class="stat">
-              <div class="stat__num">HTML • CSS</div>
-              <div class="stat__label">Frontend basics</div>
-            </div>
-            <div class="stat">
-              <div class="stat__num">JavaScript</div>
-              <div class="stat__label">Interactive UI</div>
+          <div class="hero__media reveal">
+            <div class="productCard" aria-label="Product preview">
+              <div class="productCard__img" aria-hidden="true">
+                <div class="productGlow"></div>
+                <div class="productMock"></div>
+              </div>
+              <div class="productCard__meta">
+                <div class="productCard__name">SupernovaX Smart Bottle</div>
+                <div class="productCard__desc">Temperature indicator • 750ml • Matte finish</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section" id="about">
+      <section class="section" id="checkout" aria-label="Checkout">
         <div class="container">
-          <header class="section__header reveal">
-            <h2 class="section__title">About</h2>
-            <p class="section__subtitle">
-              I’m a beginner-friendly web developer focused on clean design, responsive layouts, and
-              building real projects to grow my skills.
+          <header class="sectionHeader reveal">
+            <h2 class="sectionTitle">Checkout</h2>
+            <p class="sectionSub">
+              Login required. Pay via UPI, then enter your UTR number to place the order.
             </p>
           </header>
 
-          <div class="about">
-            <article class="card reveal">
-              <h3 class="card__title">A little about me</h3>
-              <p class="card__text">
-                I enjoy turning ideas into polished web pages. I’m learning by building projects, improving
-                UI/UX, and practicing JavaScript to add interactivity.
+          <div class="grid2">
+            <article class="card reveal" id="loginRequiredCard">
+              <h3 class="cardTitle">Login required</h3>
+              <p class="cardText">
+                To continue, please login or create an account.
               </p>
-              <div class="pillRow">
-                <span class="pill">Responsive Design</span>
-                <span class="pill">UI/UX Basics</span>
-                <span class="pill">Git (beginner)</span>
+              <div class="cardActions">
+                <a class="btn btn--primary" href="./login.html?next=index.html%23checkout">Go to Login</a>
               </div>
             </article>
 
-            <aside class="card reveal">
-              <h3 class="card__title">Core skills</h3>
-              <ul class="list list--check">
-                <li>HTML: semantic structure</li>
-                <li>CSS: layouts, flexbox/grid, animations</li>
-                <li>JavaScript: DOM, events, basic logic</li>
-                <li>Bonus: Accessibility basics, responsive patterns</li>
-              </ul>
-            </aside>
-          </div>
-        </div>
-      </section>
+            <article class="card reveal" id="paymentCard" hidden>
+              <h3 class="cardTitle">UPI payment</h3>
 
-      <section class="section section--muted" id="projects">
-        <div class="container">
-          <header class="section__header reveal">
-            <h2 class="section__title">Projects</h2>
-            <p class="section__subtitle">
-              A few projects to show my progress. Replace these with your real work anytime.
-            </p>
-          </header>
-
-          <div class="grid grid--3">
-            <article class="card project reveal">
-              <div class="project__top">
-                <div class="project__icon" aria-hidden="true">01</div>
-                <div class="project__meta">
-                  <h3 class="card__title">Landing Page</h3>
-                  <p class="card__text">A responsive product landing page with modern UI and sections.</p>
-                </div>
-              </div>
-              <div class="project__actions">
-                <a class="btn btn--ghost btn--sm" href="#" aria-label="View Landing Page project">
-                  View Project
-                </a>
-              </div>
-            </article>
-
-            <article class="card project reveal">
-              <div class="project__top">
-                <div class="project__icon" aria-hidden="true">02</div>
-                <div class="project__meta">
-                  <h3 class="card__title">To‑Do App</h3>
-                  <p class="card__text">Simple to-do app using JavaScript for add/edit/delete tasks.</p>
-                </div>
-              </div>
-              <div class="project__actions">
-                <a class="btn btn--ghost btn--sm" href="#" aria-label="View To-do App project">
-                  View Project
-                </a>
-              </div>
-            </article>
-
-            <article class="card project reveal">
-              <div class="project__top">
-                <div class="project__icon" aria-hidden="true">03</div>
-                <div class="project__meta">
-                  <h3 class="card__title">Portfolio Website</h3>
-                  <p class="card__text">
-                    This site—dark theme, scroll animations, and a clean tech layout.
-                  </p>
-                </div>
-              </div>
-              <div class="project__actions">
-                <a class="btn btn--ghost btn--sm" href="#" aria-label="View Portfolio Website project">
-                  View Project
-                </a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="skills">
-        <div class="container">
-          <header class="section__header reveal">
-            <h2 class="section__title">Skills</h2>
-            <p class="section__subtitle">A simple, clean view of what I’m comfortable with.</p>
-          </header>
-
-          <div class="skills">
-            <article class="card reveal">
-              <h3 class="card__title">Skill levels</h3>
-
-              <div class="bars" role="list">
-                <div class="bar" role="listitem">
-                  <div class="bar__top">
-                    <span class="bar__label">HTML</span>
-                    <span class="bar__value">85%</span>
+              <div class="payGrid">
+                <div>
+                  <div class="kv">
+                    <div class="kv__k">UPI ID</div>
+                    <div class="kv__v" id="upiIdText">supernovax@upi</div>
                   </div>
-                  <div class="bar__track"><div class="bar__fill" style="--w: 85%"></div></div>
-                </div>
-                <div class="bar" role="listitem">
-                  <div class="bar__top">
-                    <span class="bar__label">CSS</span>
-                    <span class="bar__value">80%</span>
+                  <div class="kv" style="margin-top: 10px">
+                    <div class="kv__k">Amount</div>
+                    <div class="kv__v">₹<span id="amountText">499</span></div>
                   </div>
-                  <div class="bar__track"><div class="bar__fill" style="--w: 80%"></div></div>
-                </div>
-                <div class="bar" role="listitem">
-                  <div class="bar__top">
-                    <span class="bar__label">JavaScript</span>
-                    <span class="bar__value">70%</span>
+                  <div class="note" style="margin-top: 12px">
+                    Pay using Google Pay / PhonePe and enter UTR number.
                   </div>
-                  <div class="bar__track"><div class="bar__fill" style="--w: 70%"></div></div>
                 </div>
-                <div class="bar" role="listitem">
-                  <div class="bar__top">
-                    <span class="bar__label">Git</span>
-                    <span class="bar__value">55%</span>
-                  </div>
-                  <div class="bar__track"><div class="bar__fill" style="--w: 55%"></div></div>
+
+                <div class="qrWrap">
+                  <div class="qrBox" id="qrBox" aria-label="UPI QR code"></div>
+                  <button class="btn btn--ghost btn--sm" type="button" id="copyUpiBtn">Copy UPI link</button>
                 </div>
               </div>
             </article>
 
-            <aside class="card reveal">
-              <h3 class="card__title">Tools I use</h3>
-              <ul class="list list--dots">
-                <li>VS Code / Cursor</li>
-                <li>Chrome DevTools</li>
-                <li>Figma (basic)</li>
-                <li>GitHub (basic)</li>
-              </ul>
-              <div class="note">
-                Tip: Update percentages and tools as you learn more.
-              </div>
-            </aside>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section--muted" id="contact">
-        <div class="container">
-          <header class="section__header reveal">
-            <h2 class="section__title">Contact</h2>
-            <p class="section__subtitle">Want to work together? Send a message and I’ll reply soon.</p>
-          </header>
-
-          <div class="contact">
-            <aside class="card reveal">
-              <h3 class="card__title">Reach me</h3>
-              <div class="contact__lines">
-                <a class="contact__line" href="mailto:your.email@example.com">
-                  <span class="contact__label">Email</span>
-                  <span class="contact__value">your.email@example.com</span>
-                </a>
-                <a
-                  class="contact__line"
-                  href="https://wa.me/0000000000"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Open WhatsApp chat"
-                >
-                  <span class="contact__label">WhatsApp</span>
-                  <span class="contact__value">Message me</span>
-                </a>
-                <div class="contact__line" role="group" aria-label="Phone number">
-                  <span class="contact__label">Phone</span>
-                  <span class="contact__value">+00 00000 00000</span>
-                </div>
-              </div>
-            </aside>
-
-            <article class="card reveal">
-              <h3 class="card__title">Send a message</h3>
-              <form class="form" id="contactForm" novalidate>
-                <div class="form__row">
-                  <label class="form__label" for="cName">Name</label>
-                  <input class="form__input" id="cName" name="name" type="text" autocomplete="name" required />
-                  <div class="form__error" data-error-for="cName"></div>
+            <article class="card reveal" id="orderCard" hidden>
+              <h3 class="cardTitle">Order details</h3>
+              <form class="form" id="orderForm" novalidate>
+                <div class="formRow">
+                  <label class="label" for="oName">Name</label>
+                  <input class="input" id="oName" name="name" type="text" autocomplete="name" required />
+                  <div class="error" id="oNameErr"></div>
                 </div>
 
-                <div class="form__row">
-                  <label class="form__label" for="cEmail">Email</label>
-                  <input
-                    class="form__input"
-                    id="cEmail"
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    required
-                  />
-                  <div class="form__error" data-error-for="cEmail"></div>
+                <div class="formRow">
+                  <label class="label" for="oEmail">Email</label>
+                  <input class="input" id="oEmail" name="email" type="email" autocomplete="email" readonly />
+                  <div class="hint">Auto-filled from logged in user.</div>
                 </div>
 
-                <div class="form__row">
-                  <label class="form__label" for="cMessage">Message</label>
-                  <textarea
-                    class="form__input form__textarea"
-                    id="cMessage"
-                    name="message"
-                    rows="5"
-                    placeholder="Tell me about your project..."
-                    required
-                  ></textarea>
-                  <div class="form__error" data-error-for="cMessage"></div>
+                <div class="formRow">
+                  <label class="label" for="oUtr">UTR number</label>
+                  <input class="input" id="oUtr" name="utr" type="text" inputmode="numeric" minlength="8" required />
+                  <div class="error" id="oUtrErr"></div>
                 </div>
 
-                <button class="btn btn--primary btn--full" type="submit" id="contactSubmit">
-                  Send Message
+                <button class="btn btn--primary btn--full" type="submit" id="orderSubmitBtn">
+                  Submit Order
                 </button>
 
-                <div class="form__status" id="contactStatus" aria-live="polite"></div>
+                <div class="status" id="orderStatus" aria-live="polite"></div>
               </form>
             </article>
+
+            <aside class="card reveal">
+              <h3 class="cardTitle">How verification works</h3>
+              <ol class="steps">
+                <li>Pay to the shown UPI ID (manual).</li>
+                <li>Copy/paste the UTR number from your UPI app.</li>
+                <li>We mark your order as <strong>pending</strong> until verified.</li>
+              </ol>
+              <div class="note">
+                This is a portfolio demo. Use your own admin email + UPI ID for a real project.
+              </div>
+            </aside>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <div class="container footer__content">
+      <div class="container footer__inner">
         <div>
-          <div class="footer__brand">Supernova Web Agency</div>
-          <div class="footer__muted">Web Developer • Building responsive web experiences</div>
+          <div class="footer__brand">SupernovaX</div>
+          <div class="footer__muted">Single‑product ecommerce demo</div>
         </div>
-        <div class="footer__muted">© <span id="year"></span> Supernova Web Agency</div>
+        <div class="footer__muted">© <span id="year"></span> SupernovaX</div>
       </div>
     </footer>
 
-    <button class="toTop" type="button" id="toTop" aria-label="Back to top">
-      ↑
-    </button>
-
-    <script src="./script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="module" src="./script.js"></script>
   </body>
 </html>
