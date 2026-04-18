@@ -1,152 +1,15 @@
-/* global emailjs */
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from "./supabase-config.js";
 
-const EMAILJS_PUBLIC_KEY = "It8MnXTlUO0P1sDlz";
-const EMAILJS_SERVICE_ID = "service_821ja8h";
-const EMAILJS_TEMPLATE_ID = "template_hh2ar0t";
-
-const modal = document.getElementById("bookingModal");
-const modalBody = document.getElementById("modalBody");
-const form = document.getElementById("bookingForm");
-const statusEl = document.getElementById("formStatus");
-const submitBtn = document.getElementById("submitBtn");
-const planSelect = document.getElementById("plan");
 const navToggle = document.querySelector(".nav__toggle");
 const navLinks = document.getElementById("navLinks");
+const toTop = document.getElementById("toTop");
 
-const CONFIRMATION_TEXT =
-  "Registration successful! Please visit the gym and pay offline to activate your plan.";
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 function setYear() {
   const year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
-}
-
-function openModalWithPlan(planValue) {
-  if (!modal) return;
-  modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-
-  if (planSelect && planValue) {
-    planSelect.value = planValue;
-  }
-
-  const firstInput = modal.querySelector("input, select, button");
-  if (firstInput) firstInput.focus();
-}
-
-function closeModal() {
-  if (!modal) return;
-  modal.classList.remove("is-open");
-  modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
-
-function clearErrors() {
-  document.querySelectorAll("[data-error-for]").forEach((el) => {
-    el.textContent = "";
-  });
-}
-
-function setError(inputId, message) {
-  const el = document.querySelector(`[data-error-for="${inputId}"]`);
-  if (el) el.textContent = message;
-}
-
-function isValidPhone(value) {
-  const cleaned = String(value || "").replace(/\s+/g, "");
-  return /^[0-9]{10,15}$/.test(cleaned);
-}
-
-function validateForm() {
-  clearErrors();
-  let ok = true;
-
-  const name = document.getElementById("name");
-  const email = document.getElementById("email");
-  const phone = document.getElementById("phone");
-  const plan = document.getElementById("plan");
-
-  if (!name || !name.value.trim()) {
-    setError("name", "Please enter your name.");
-    ok = false;
-  }
-  if (!email || !email.value.trim() || !email.checkValidity()) {
-    setError("email", "Please enter a valid email.");
-    ok = false;
-  }
-  if (!phone || !phone.value.trim() || !isValidPhone(phone.value)) {
-    setError("phone", "Please enter a valid phone number (10–15 digits).");
-    ok = false;
-  }
-  if (!plan || !plan.value) {
-    setError("plan", "Please select a plan.");
-    ok = false;
-  }
-
-  return ok;
-}
-
-function setStatus(message, type = "info") {
-  if (!statusEl) return;
-  statusEl.textContent = message;
-  statusEl.dataset.type = type;
-}
-
-function setSubmitting(isSubmitting) {
-  if (!submitBtn) return;
-  submitBtn.disabled = isSubmitting;
-  submitBtn.textContent = isSubmitting ? "Sending..." : "Submit Registration";
-}
-
-function showConfirmation() {
-  if (!modalBody) return;
-  modalBody.innerHTML = `
-    <h2 class="modal__title">You're registered</h2>
-    <p class="modal__subtitle">${CONFIRMATION_TEXT}</p>
-    <div class="note-banner note-banner--subtle" role="note">
-      <strong>Offline payment only – Pay at the gym</strong>
-    </div>
-    <button class="btn btn--primary btn--full" type="button" id="closeAfterSuccess">Close</button>
-  `;
-  const closeBtn = document.getElementById("closeAfterSuccess");
-  if (closeBtn) closeBtn.addEventListener("click", closeModal);
-}
-
-function initEmailJs() {
-  if (typeof emailjs === "undefined") return;
-  try {
-    if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
-      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-    }
-  } catch {
-    // no-op: will be surfaced on send
-  }
-}
-
-function getPlanFromTrigger(trigger) {
-  const plan = trigger?.getAttribute?.("data-plan");
-  return plan || "1 Month Pass";
-}
-
-function bindJoinButtons() {
-  document.querySelectorAll("[data-join]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      openModalWithPlan(getPlanFromTrigger(btn));
-      if (navLinks) navLinks.classList.remove("is-open");
-      if (navToggle) navToggle.setAttribute("aria-expanded", "false");
-    });
-  });
-}
-
-function bindModalClose() {
-  document.querySelectorAll("[data-modal-close]").forEach((el) => {
-    el.addEventListener("click", closeModal);
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal?.classList.contains("is-open")) closeModal();
-  });
 }
 
 function bindNavToggle() {
@@ -160,57 +23,6 @@ function bindNavToggle() {
       navLinks.classList.remove("is-open");
       navToggle.setAttribute("aria-expanded", "false");
     });
-  });
-}
-
-function bindFormSubmit() {
-  if (!form) return;
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    setStatus("");
-
-    if (!validateForm()) return;
-
-    const from_name = document.getElementById("name").value.trim();
-    const reply_to = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const plan = document.getElementById("plan").value;
-
-    if (typeof emailjs === "undefined") {
-      setStatus("Email service not loaded. Please check your internet connection.", "error");
-      return;
-    }
-    if (
-      EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY" ||
-      EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID" ||
-      EMAILJS_TEMPLATE_ID === "YOUR_TEMPLATE_ID"
-    ) {
-      setStatus(
-        "EmailJS is not configured yet. Add your Public Key, Service ID, and Template ID in script.js.",
-        "error",
-      );
-      return;
-    }
-
-    setSubmitting(true);
-    setStatus("Submitting your registration...", "info");
-
-    try {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name,
-        reply_to,
-        phone,
-        plan,
-      });
-
-      showConfirmation();
-    } catch (err) {
-      setStatus("Failed to send. Please try again in a moment.", "error");
-      // eslint-disable-next-line no-console
-      console.error(err);
-    } finally {
-      setSubmitting(false);
-    }
   });
 }
 
@@ -239,11 +51,140 @@ function initRevealAnimations() {
   items.forEach((el) => observer.observe(el));
 }
 
+function bindBackToTop() {
+  if (!toTop) return;
+  const onScroll = () => {
+    const show = window.scrollY > 650;
+    toTop.classList.toggle("is-visible", show);
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  toTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+function setActiveNavLink() {
+  const links = Array.from(document.querySelectorAll('.nav__links a[href^="#"]'));
+  if (!links.length) return;
+
+  const sections = links
+    .map((a) => {
+      const id = a.getAttribute("href")?.slice(1);
+      const el = id ? document.getElementById(id) : null;
+      return { a, el };
+    })
+    .filter((x) => x.el);
+
+  if (!sections.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      if (!visible.length) return;
+      const activeEl = visible[0].target;
+      for (const { a, el } of sections) {
+        a.classList.toggle("is-active", el === activeEl);
+      }
+    },
+    { rootMargin: "-30% 0px -55% 0px", threshold: [0.05, 0.12, 0.2] },
+  );
+
+  sections.forEach(({ el }) => observer.observe(el));
+}
+
+function clearErrors() {
+  document.querySelectorAll("[data-error-for]").forEach((el) => {
+    el.textContent = "";
+  });
+}
+
+function setError(inputId, message) {
+  const el = document.querySelector(`[data-error-for="${inputId}"]`);
+  if (el) el.textContent = message;
+}
+
+function setStatus(message, type = "info") {
+  const statusEl = document.getElementById("contactStatus");
+  if (!statusEl) return;
+  statusEl.textContent = message;
+  statusEl.dataset.type = type;
+}
+
+function validateContactForm() {
+  clearErrors();
+  let ok = true;
+
+  const name = document.getElementById("cName");
+  const email = document.getElementById("cEmail");
+  const message = document.getElementById("cMessage");
+
+  if (!name?.value?.trim()) {
+    setError("cName", "Please enter your name.");
+    ok = false;
+  }
+  if (!email?.value?.trim() || !email.checkValidity()) {
+    setError("cEmail", "Please enter a valid email.");
+    ok = false;
+  }
+  if (!message?.value?.trim() || message.value.trim().length < 10) {
+    setError("cMessage", "Please enter a message (at least 10 characters).");
+    ok = false;
+  }
+
+  return ok;
+}
+
+function bindContactForm() {
+  const form = document.getElementById("contactForm");
+  const submitBtn = document.getElementById("contactSubmit");
+  if (!form || !submitBtn) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    setStatus("");
+
+    if (!validateContactForm()) {
+      setStatus("Please fix the highlighted fields.", "error");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending...";
+    setStatus("Sending your message…", "info");
+
+    const name = document.getElementById("cName")?.value?.trim() ?? "";
+    const email = document.getElementById("cEmail")?.value?.trim() ?? "";
+    const message = document.getElementById("cMessage")?.value?.trim() ?? "";
+
+    try {
+      const { error } = await supabase.from("contact_messages").insert({
+        name,
+        email,
+        message,
+        page_url: window.location.href,
+        user_agent: navigator.userAgent,
+      });
+
+      if (error) throw error;
+
+      setStatus("Thanks! Your message was sent successfully.", "success");
+      form.reset();
+    } catch (err) {
+      const msg = err?.message ? String(err.message) : "Failed to send message. Please try again.";
+      setStatus(msg, "error");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send Message";
+    }
+  });
+}
+
 setYear();
 bindNavToggle();
-bindJoinButtons();
-bindModalClose();
 initRevealAnimations();
-initEmailJs();
-bindFormSubmit();
+bindBackToTop();
+setActiveNavLink();
+bindContactForm();
 

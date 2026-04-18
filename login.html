@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070b18" />
+    <title>Login Demo — Supabase Auth</title>
+    <meta name="description" content="Demo login page using Supabase Auth (email + password)." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="header" id="top">
+      <nav class="nav container" aria-label="Primary">
+        <a class="brand" href="./index.html" aria-label="Back to home">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__text">Supernova Web Agency</span>
+        </a>
+        <div class="nav__links is-open" id="navLinks">
+          <a href="./index.html#projects">Back</a>
+          <a href="./payment.html">UPI QR Demo</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="section">
+        <div class="container">
+          <header class="section__header reveal is-visible">
+            <h1 class="section__title">Login Demo</h1>
+            <p class="section__subtitle">
+              This is a portfolio demo using <strong>Supabase Auth</strong> (email + password).
+            </p>
+          </header>
+
+          <div class="grid grid--3" style="align-items: start">
+            <article class="card reveal is-visible" style="grid-column: span 2">
+              <h2 class="card__title">Sign in / Sign up</h2>
+              <form class="form" id="authForm" novalidate>
+                <div class="form__row">
+                  <label class="form__label" for="aEmail">Email</label>
+                  <input class="form__input" id="aEmail" name="email" type="email" autocomplete="email" required />
+                  <div class="form__error" id="aEmailError"></div>
+                </div>
+
+                <div class="form__row">
+                  <label class="form__label" for="aPassword">Password</label>
+                  <input
+                    class="form__input"
+                    id="aPassword"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    minlength="6"
+                    required
+                  />
+                  <div class="form__error" id="aPasswordError"></div>
+                </div>
+
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px">
+                  <button class="btn btn--primary" type="button" id="signInBtn">Sign in</button>
+                  <button class="btn btn--ghost" type="button" id="signUpBtn">Create account</button>
+                  <button class="btn btn--ghost" type="button" id="signOutBtn">Sign out</button>
+                </div>
+
+                <div class="form__status" id="authStatus" aria-live="polite" style="margin-top: 10px"></div>
+              </form>
+            </article>
+
+            <aside class="card reveal is-visible">
+              <h2 class="card__title">Session</h2>
+              <p class="card__text" style="margin-bottom: 12px">
+                Shows whether you’re logged in. For a portfolio demo, this proves the auth flow works.
+              </p>
+              <pre
+                id="sessionBox"
+                style="
+                  white-space: pre-wrap;
+                  word-break: break-word;
+                  font-size: 13px;
+                  line-height: 1.45;
+                  background: rgba(255, 255, 255, 0.04);
+                  border: 1px solid rgba(255, 255, 255, 0.08);
+                  padding: 12px;
+                  border-radius: 14px;
+                "
+              >
+Loading…
+              </pre>
+            </aside>
+          </div>
+
+          <div class="note" style="margin-top: 18px">
+            Note: In Supabase Auth settings, ensure Email auth is enabled. If you have “Confirm email” enabled, new
+            signups won’t be active until they confirm.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__content">
+        <div>
+          <div class="footer__brand">Supernova Web Agency</div>
+          <div class="footer__muted">Supabase Auth demo</div>
+        </div>
+        <div class="footer__muted">© <span id="year"></span> Supernova Web Agency</div>
+      </div>
+    </footer>
+
+    <script type="module" src="./login.js"></script>
+  </body>
+</html>
+

@@ -3,24 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0b0b0f" />
-    <title>Titan Fitness — Transform Your Body, Build Your Strength</title>
+    <meta name="theme-color" content="#070b18" />
+    <title>Supernova Web Agency — Developer Portfolio</title>
+    <meta
+      name="description"
+      content="Developer portfolio of Supernova Web Agency. Projects, skills, and contact information."
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#home">Skip to content</a>
+    <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="header" id="top">
       <nav class="nav container" aria-label="Primary">
-        <a class="brand" href="#home" aria-label="Titan Fitness home">
+        <a class="brand" href="#home" aria-label="Home">
           <span class="brand__mark" aria-hidden="true"></span>
-          <span class="brand__text">Titan Fitness</span>
+          <span class="brand__text">Supernova Web Agency</span>
         </a>
 
         <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navLinks">
@@ -29,223 +35,282 @@
         </button>
 
         <div class="nav__links" id="navLinks">
-          <a href="#features">Features</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#timings">Timings</a>
-          <a href="#join" class="nav__cta" data-join data-plan="1 Month Pass">Join Now</a>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact" class="nav__cta">Contact</a>
         </div>
       </nav>
     </header>
 
-    <main>
-      <section class="hero" id="home">
-        <div class="hero__bg" role="img" aria-label="Fitness training background"></div>
+    <main id="main">
+      <section class="hero" id="home" aria-label="Hero">
+        <div class="hero__bg" aria-hidden="true"></div>
         <div class="container hero__content reveal">
-          <p class="hero__eyebrow">Strength • Discipline • Results</p>
-          <h1 class="hero__title">Titan Fitness</h1>
-          <p class="hero__tagline">Transform Your Body, Build Your Strength</p>
-
-          <div class="hero__actions">
-            <button class="btn btn--primary" type="button" data-join data-plan="1 Month Pass">
-              Join Now
-            </button>
-            <a class="btn btn--ghost" href="#pricing">View Pricing</a>
+          <div class="hero__chip">
+            <span class="dot" aria-hidden="true"></span>
+            Available for opportunities
           </div>
 
-          <div class="hero__note">
-            <span class="pill pill--warn">Offline payment only</span>
-            <span class="hero__noteText">Pay at the gym</span>
+          <h1 class="hero__title">
+            Hi, we’re <span class="grad">Supernova Web Agency</span>
+          </h1>
+          <p class="hero__tagline">
+            Web Developer • Building modern, responsive websites with clean UI and smooth interactions.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#projects">View Projects</a>
+            <a class="btn btn--ghost" href="#contact">Contact Me</a>
+          </div>
+
+          <div class="hero__stats">
+            <div class="stat">
+              <div class="stat__num">3+</div>
+              <div class="stat__label">Projects</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">HTML • CSS</div>
+              <div class="stat__label">Frontend basics</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">JavaScript</div>
+              <div class="stat__label">Interactive UI</div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="section" id="features">
+      <section class="section" id="about">
         <div class="container">
           <header class="section__header reveal">
-            <h2 class="section__title">Built for serious training</h2>
-            <p class="section__subtitle">Everything you need to train hard and recover smart.</p>
+            <h2 class="section__title">About</h2>
+            <p class="section__subtitle">
+              I’m a beginner-friendly web developer focused on clean design, responsive layouts, and
+              building real projects to grow my skills.
+            </p>
+          </header>
+
+          <div class="about">
+            <article class="card reveal">
+              <h3 class="card__title">A little about me</h3>
+              <p class="card__text">
+                I enjoy turning ideas into polished web pages. I’m learning by building projects, improving
+                UI/UX, and practicing JavaScript to add interactivity.
+              </p>
+              <div class="pillRow">
+                <span class="pill">Responsive Design</span>
+                <span class="pill">UI/UX Basics</span>
+                <span class="pill">Git (beginner)</span>
+              </div>
+            </article>
+
+            <aside class="card reveal">
+              <h3 class="card__title">Core skills</h3>
+              <ul class="list list--check">
+                <li>HTML: semantic structure</li>
+                <li>CSS: layouts, flexbox/grid, animations</li>
+                <li>JavaScript: DOM, events, basic logic</li>
+                <li>Bonus: Accessibility basics, responsive patterns</li>
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--muted" id="projects">
+        <div class="container">
+          <header class="section__header reveal">
+            <h2 class="section__title">Projects</h2>
+            <p class="section__subtitle">
+              A few projects to show my progress. Replace these with your real work anytime.
+            </p>
           </header>
 
           <div class="grid grid--3">
-            <article class="card feature reveal">
-              <div class="feature__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M7 7h10M7 12h10M7 17h10"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  />
-                </svg>
+            <article class="card project reveal">
+              <div class="project__top">
+                <div class="project__icon" aria-hidden="true">01</div>
+                <div class="project__meta">
+                  <h3 class="card__title">Landing Page</h3>
+                  <p class="card__text">A responsive product landing page with modern UI and sections.</p>
+                </div>
               </div>
-              <h3 class="card__title">AC Facility</h3>
-              <p class="card__text">Train comfortably with airflow designed for performance.</p>
+              <div class="project__actions">
+                <a class="btn btn--ghost btn--sm" href="#" aria-label="View Landing Page project">
+                  View Project
+                </a>
+              </div>
             </article>
 
-            <article class="card feature reveal">
-              <div class="feature__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M7 10h10M7 14h10"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M4 9v6M20 9v6"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M6 7h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  />
-                </svg>
+            <article class="card project reveal">
+              <div class="project__top">
+                <div class="project__icon" aria-hidden="true">02</div>
+                <div class="project__meta">
+                  <h3 class="card__title">To‑Do App</h3>
+                  <p class="card__text">Simple to-do app using JavaScript for add/edit/delete tasks.</p>
+                </div>
               </div>
-              <h3 class="card__title">Modern Equipment</h3>
-              <p class="card__text">Quality machines and free weights for every goal.</p>
+              <div class="project__actions">
+                <a class="btn btn--ghost btn--sm" href="#" aria-label="View To-do App project">
+                  View Project
+                </a>
+              </div>
             </article>
 
-            <article class="card feature reveal">
-              <div class="feature__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 7v5l3 2"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  />
-                </svg>
+            <article class="card project reveal">
+              <div class="project__top">
+                <div class="project__icon" aria-hidden="true">03</div>
+                <div class="project__meta">
+                  <h3 class="card__title">Portfolio Website</h3>
+                  <p class="card__text">
+                    This site—dark theme, scroll animations, and a clean tech layout.
+                  </p>
+                </div>
               </div>
-              <h3 class="card__title">Open Daily</h3>
-              <p class="card__text">Consistency wins. We’re open all 7 days a week.</p>
+              <div class="project__actions">
+                <a class="btn btn--ghost btn--sm" href="#" aria-label="View Portfolio Website project">
+                  View Project
+                </a>
+              </div>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section section--muted" id="pricing">
+      <section class="section" id="skills">
         <div class="container">
           <header class="section__header reveal">
-            <h2 class="section__title">Simple pricing. Strong results.</h2>
-            <p class="section__subtitle">Choose a plan and pay offline at the gym to activate.</p>
+            <h2 class="section__title">Skills</h2>
+            <p class="section__subtitle">A simple, clean view of what I’m comfortable with.</p>
           </header>
 
-          <div class="note-banner reveal" role="note">
-            <strong>Offline payment only – Pay at the gym</strong>
-          </div>
+          <div class="skills">
+            <article class="card reveal">
+              <h3 class="card__title">Skill levels</h3>
 
-          <div class="grid grid--3 pricing">
-            <article class="card price reveal">
-              <header class="price__header">
-                <h3 class="card__title">1 Day Pass</h3>
-                <p class="price__amount"><span class="price__currency">₹</span>199</p>
-              </header>
-              <ul class="list">
-                <li>Full gym access</li>
-                <li>All equipment</li>
-                <li>Any training time</li>
-              </ul>
-              <button class="btn btn--primary btn--full" type="button" data-join data-plan="1 Day Pass">
-                Join Now
-              </button>
+              <div class="bars" role="list">
+                <div class="bar" role="listitem">
+                  <div class="bar__top">
+                    <span class="bar__label">HTML</span>
+                    <span class="bar__value">85%</span>
+                  </div>
+                  <div class="bar__track"><div class="bar__fill" style="--w: 85%"></div></div>
+                </div>
+                <div class="bar" role="listitem">
+                  <div class="bar__top">
+                    <span class="bar__label">CSS</span>
+                    <span class="bar__value">80%</span>
+                  </div>
+                  <div class="bar__track"><div class="bar__fill" style="--w: 80%"></div></div>
+                </div>
+                <div class="bar" role="listitem">
+                  <div class="bar__top">
+                    <span class="bar__label">JavaScript</span>
+                    <span class="bar__value">70%</span>
+                  </div>
+                  <div class="bar__track"><div class="bar__fill" style="--w: 70%"></div></div>
+                </div>
+                <div class="bar" role="listitem">
+                  <div class="bar__top">
+                    <span class="bar__label">Git</span>
+                    <span class="bar__value">55%</span>
+                  </div>
+                  <div class="bar__track"><div class="bar__fill" style="--w: 55%"></div></div>
+                </div>
+              </div>
             </article>
 
-            <article class="card price reveal">
-              <header class="price__header">
-                <h3 class="card__title">1 Week Pass</h3>
-                <p class="price__amount"><span class="price__currency">₹</span>699</p>
-              </header>
-              <ul class="list">
-                <li>Full gym access</li>
-                <li>Beginner-friendly</li>
-                <li>7 days training</li>
+            <aside class="card reveal">
+              <h3 class="card__title">Tools I use</h3>
+              <ul class="list list--dots">
+                <li>VS Code / Cursor</li>
+                <li>Chrome DevTools</li>
+                <li>Figma (basic)</li>
+                <li>GitHub (basic)</li>
               </ul>
-              <button class="btn btn--primary btn--full" type="button" data-join data-plan="1 Week Pass">
-                Join Now
-              </button>
-            </article>
-
-            <article class="card price reveal">
-              <header class="price__header">
-                <h3 class="card__title">1 Month Pass</h3>
-                <p class="price__amount"><span class="price__currency">₹</span>2599</p>
-              </header>
-              <ul class="list">
-                <li>Full gym access</li>
-                <li>Best value</li>
-                <li>Build a routine</li>
-              </ul>
-              <button
-                class="btn btn--primary btn--full"
-                type="button"
-                data-join
-                data-plan="1 Month Pass"
-              >
-                Join Now
-              </button>
-            </article>
+              <div class="note">
+                Tip: Update percentages and tools as you learn more.
+              </div>
+            </aside>
           </div>
         </div>
       </section>
 
-      <section class="section" id="timings">
+      <section class="section section--muted" id="contact">
         <div class="container">
           <header class="section__header reveal">
-            <h2 class="section__title">Timings</h2>
-            <p class="section__subtitle">Train when it fits your schedule.</p>
+            <h2 class="section__title">Contact</h2>
+            <p class="section__subtitle">Want to work together? Send a message and I’ll reply soon.</p>
           </header>
 
-          <div class="timings reveal">
-            <div class="timings__card">
-              <div class="timings__row">
-                <span class="timings__label">Opening time</span>
-                <span class="timings__value">6:00 AM – 9:00 PM</span>
+          <div class="contact">
+            <aside class="card reveal">
+              <h3 class="card__title">Reach me</h3>
+              <div class="contact__lines">
+                <a class="contact__line" href="mailto:your.email@example.com">
+                  <span class="contact__label">Email</span>
+                  <span class="contact__value">your.email@example.com</span>
+                </a>
+                <a
+                  class="contact__line"
+                  href="https://wa.me/0000000000"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open WhatsApp chat"
+                >
+                  <span class="contact__label">WhatsApp</span>
+                  <span class="contact__value">Message me</span>
+                </a>
+                <div class="contact__line" role="group" aria-label="Phone number">
+                  <span class="contact__label">Phone</span>
+                  <span class="contact__value">+00 00000 00000</span>
+                </div>
               </div>
-              <div class="timings__row">
-                <span class="timings__label">Days</span>
-                <span class="timings__value">Open all 7 days</span>
-              </div>
-            </div>
-            <div class="timings__cta">
-              <p class="timings__ctaText">Ready to start? Pick a plan and reserve your spot.</p>
-              <button class="btn btn--primary" type="button" data-join data-plan="1 Month Pass">Join Now</button>
-            </div>
-          </div>
-        </div>
-      </section>
+            </aside>
 
-      <section class="section section--muted" id="join">
-        <div class="container">
-          <header class="section__header reveal">
-            <h2 class="section__title">Join Titan Fitness</h2>
-            <p class="section__subtitle">Tap “Join Now” to open the booking form.</p>
-          </header>
+            <article class="card reveal">
+              <h3 class="card__title">Send a message</h3>
+              <form class="form" id="contactForm" novalidate>
+                <div class="form__row">
+                  <label class="form__label" for="cName">Name</label>
+                  <input class="form__input" id="cName" name="name" type="text" autocomplete="name" required />
+                  <div class="form__error" data-error-for="cName"></div>
+                </div>
 
-          <div class="join__grid">
-            <div class="card join__card reveal">
-              <h3 class="card__title">Fast registration</h3>
-              <p class="card__text">
-                Fill your details, select a plan, and we’ll send your registration to our team.
-              </p>
-              <div class="note-banner note-banner--subtle" role="note">
-                <strong>Offline payment only – Pay at the gym</strong>
-              </div>
-              <button class="btn btn--primary" type="button" data-join data-plan="1 Month Pass">Join Now</button>
-            </div>
+                <div class="form__row">
+                  <label class="form__label" for="cEmail">Email</label>
+                  <input
+                    class="form__input"
+                    id="cEmail"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    required
+                  />
+                  <div class="form__error" data-error-for="cEmail"></div>
+                </div>
+
+                <div class="form__row">
+                  <label class="form__label" for="cMessage">Message</label>
+                  <textarea
+                    class="form__input form__textarea"
+                    id="cMessage"
+                    name="message"
+                    rows="5"
+                    placeholder="Tell me about your project..."
+                    required
+                  ></textarea>
+                  <div class="form__error" data-error-for="cMessage"></div>
+                </div>
+
+                <button class="btn btn--primary btn--full" type="submit" id="contactSubmit">
+                  Send Message
+                </button>
+
+                <div class="form__status" id="contactStatus" aria-live="polite"></div>
+              </form>
+            </article>
           </div>
         </div>
       </section>
@@ -254,76 +319,17 @@
     <footer class="footer">
       <div class="container footer__content">
         <div>
-          <div class="footer__brand">Titan Fitness</div>
-          <div class="footer__muted">Transform Your Body, Build Your Strength</div>
+          <div class="footer__brand">Supernova Web Agency</div>
+          <div class="footer__muted">Web Developer • Building responsive web experiences</div>
         </div>
-        <div class="footer__muted">© <span id="year"></span> Titan Fitness. All rights reserved.</div>
+        <div class="footer__muted">© <span id="year"></span> Supernova Web Agency</div>
       </div>
     </footer>
 
-    <div class="modal" id="bookingModal" aria-hidden="true">
-      <div class="modal__overlay" data-modal-close tabindex="-1"></div>
-      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
-        <button class="modal__close" type="button" aria-label="Close booking form" data-modal-close>
-          <span aria-hidden="true">×</span>
-        </button>
+    <button class="toTop" type="button" id="toTop" aria-label="Back to top">
+      ↑
+    </button>
 
-        <div class="modal__body" id="modalBody">
-          <h2 class="modal__title" id="bookingTitle">Booking Form</h2>
-          <p class="modal__subtitle">Complete registration. Payment is offline at the gym.</p>
-
-          <div class="note-banner note-banner--subtle" role="note">
-            <strong>Offline payment only – Pay at the gym</strong>
-          </div>
-
-          <form class="form" id="bookingForm" novalidate>
-            <div class="form__row">
-              <label class="form__label" for="name">Name</label>
-              <input class="form__input" id="name" name="from_name" type="text" autocomplete="name" required />
-              <div class="form__error" data-error-for="name"></div>
-            </div>
-
-            <div class="form__row">
-              <label class="form__label" for="email">Email</label>
-              <input class="form__input" id="email" name="reply_to" type="email" autocomplete="email" required />
-              <div class="form__error" data-error-for="email"></div>
-            </div>
-
-            <div class="form__row">
-              <label class="form__label" for="phone">Phone Number</label>
-              <input
-                class="form__input"
-                id="phone"
-                name="phone"
-                type="tel"
-                inputmode="tel"
-                autocomplete="tel"
-                placeholder="e.g. 9876543210"
-                required
-              />
-              <div class="form__error" data-error-for="phone"></div>
-            </div>
-
-            <div class="form__row">
-              <label class="form__label" for="plan">Select Plan</label>
-              <select class="form__input" id="plan" name="plan" required>
-                <option value="1 Day Pass">1 Day Pass – ₹199</option>
-                <option value="1 Week Pass">1 Week Pass – ₹699</option>
-                <option value="1 Month Pass">1 Month Pass – ₹2599</option>
-              </select>
-              <div class="form__error" data-error-for="plan"></div>
-            </div>
-
-            <button class="btn btn--primary btn--full" type="submit" id="submitBtn">Submit Registration</button>
-
-            <div class="form__status" id="formStatus" aria-live="polite"></div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>
-

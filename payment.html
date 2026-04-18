@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070b18" />
+    <title>UPI QR Demo — Example Payment</title>
+    <meta name="description" content="Portfolio demo page that generates an example (random) UPI QR code." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="header" id="top">
+      <nav class="nav container" aria-label="Primary">
+        <a class="brand" href="./index.html" aria-label="Back to home">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__text">Supernova Web Agency</span>
+        </a>
+        <div class="nav__links is-open" id="navLinks">
+          <a href="./index.html#projects">Back</a>
+          <a href="./login.html">Login Demo</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="section">
+        <div class="container">
+          <header class="section__header reveal is-visible">
+            <h1 class="section__title">UPI QR Demo</h1>
+            <p class="section__subtitle">
+              Generates a <strong>random example UPI QR</strong> for your portfolio. This is a demo—don’t use it for real
+              payments.
+            </p>
+          </header>
+
+          <div class="grid grid--3" style="align-items: start">
+            <article class="card reveal is-visible" style="grid-column: span 2">
+              <h2 class="card__title">Create an example payment</h2>
+              <form class="form" id="payForm" novalidate>
+                <div class="form__row">
+                  <label class="form__label" for="pAmount">Amount (₹)</label>
+                  <input class="form__input" id="pAmount" name="amount" type="number" min="1" step="1" value="199" required />
+                  <div class="form__error" id="pAmountError"></div>
+                </div>
+
+                <div class="form__row">
+                  <label class="form__label" for="pNote">Note</label>
+                  <input class="form__input" id="pNote" name="note" type="text" maxlength="40" value="Portfolio demo" required />
+                  <div class="form__error" id="pNoteError"></div>
+                </div>
+
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px">
+                  <button class="btn btn--primary" type="submit" id="genBtn">Generate QR</button>
+                  <button class="btn btn--ghost" type="button" id="randomBtn">Randomize UPI</button>
+                  <button class="btn btn--ghost" type="button" id="copyBtn">Copy UPI link</button>
+                </div>
+
+                <div class="form__status" id="payStatus" aria-live="polite" style="margin-top: 10px"></div>
+              </form>
+
+              <div class="note" style="margin-top: 14px">
+                Tip: On mobile, many UPI apps can scan this QR. Since it’s random, it’s only for showcasing QR generation.
+              </div>
+            </article>
+
+            <aside class="card reveal is-visible">
+              <h2 class="card__title">QR Preview</h2>
+              <div
+                id="qrBox"
+                style="
+                  display: grid;
+                  place-items: center;
+                  background: #ffffff;
+                  border-radius: 16px;
+                  padding: 16px;
+                  margin: 10px 0 12px;
+                  border: 1px solid rgba(0, 0, 0, 0.08);
+                "
+              ></div>
+              <div class="card__text" style="margin-top: 10px">
+                <div><strong>UPI ID:</strong> <span id="upiIdText">—</span></div>
+                <div style="margin-top: 6px"><strong>UPI link:</strong></div>
+                <pre
+                  id="upiLinkBox"
+                  style="
+                    white-space: pre-wrap;
+                    word-break: break-word;
+                    font-size: 12.5px;
+                    line-height: 1.45;
+                    background: rgba(255, 255, 255, 0.04);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    padding: 10px;
+                    border-radius: 14px;
+                    margin-top: 6px;
+                  "
+                ></pre>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__content">
+        <div>
+          <div class="footer__brand">Supernova Web Agency</div>
+          <div class="footer__muted">UPI QR demo</div>
+        </div>
+        <div class="footer__muted">© <span id="year"></span> Supernova Web Agency</div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="module" src="./payment.js"></script>
+  </body>
+</html>
+
